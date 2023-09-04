@@ -29,12 +29,13 @@ steps:
             for rg in $resource_groups; do
                 if [[ ! $rg =~ "test" ]]; then
                     echo "Applying CanNotDelete lock on resource group: $rg"
-                    az lock create --name "CanNotDeleteLock" --lock-type CanNotDelete --resource-group $rg --notes "Lock applied by script"
+                    az lock create --name "CanNotDelete" --lock-type CanNotDelete --resource-group $rg --notes "Lock applied by script"
                 else
                     echo "Skipping resource group: $rg"
                 fi
             done
 - task: AzureCLI@2
+  displayName: 'Remove Lock' 
   inputs:
     azureSubscription: 'Pay-As-You-Go(681553e1-c4b9-4afd-9957-5d0a05feefd3)'
     scriptType: 'bash'
