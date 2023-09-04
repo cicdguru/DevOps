@@ -12,7 +12,6 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Pay-As-You-Go(681553e1-c4b9-4afd-9957-5d0a05feefd3)'
@@ -20,16 +19,18 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       #!/bin/bash
-      
-      # Resource group names
-      resource_groups=$(az group list --query "[].name" -o tsv)
-      
-      # Apply CanNotDelete lock on resource groups
-      for rg in $resource_groups; do
-          if [[ ! $rg =~ "test" ]]; then
-              echo "Applying CanNotDelete lock on resource group: $rg"
-              az lock create --name "CanNotDeleteLock" --lock-type CanNotDelete --resource-group $rg --notes "Lock applied by script"
-          else
-              echo "Skipping resource group: $rg"
-          fi
-      done
+            
+            # Resource group names
+            resource_groups=$(az group list --query "[].name" -o tsv)
+            
+            # Apply CanNotDelete lock on resource groups
+            for rg in $resource_groups; do
+                if [[ ! $rg =~ "test" ]]; then
+                    echo "Applying CanNotDelete lock on resource group: $rg"
+                    az lock create --name "CanNotDeleteLock" --lock-type CanNotDelete --resource-group $rg --notes "Lock applied by script"
+                else
+                    echo "Skipping resource group: $rg"
+                fi
+            done
+    addSpnToEnvironment: true
+    useGlobalConfig: true
