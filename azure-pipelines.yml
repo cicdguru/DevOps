@@ -13,7 +13,7 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 - task: AzureCLI@2
-  displayName: 'Apply Lock' 
+  displayName: 'Apply Lock for RG' 
 
   inputs:
     azureSubscription: 'Pay-As-You-Go(681553e1-c4b9-4afd-9957-5d0a05feefd3)'
